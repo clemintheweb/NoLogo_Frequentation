@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoLogo Frequentation</title>
+    <link type="image/png" sizes="32x32" href="https://nologofestival.fr/wp-content/themes/no-logo/favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://nologofestival.fr/wp-content/themes/no-logo/favicons/apple-touch-icon.png">
+    <link rel="icon" href="https://nologofestival.fr/wp-content/themes/no-logo/favicons/favicon-16x16.png">
+    <script src="https://public.flourish.studio/resources/embed.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Apply Inter font universally */
+        body, h1, p, button, .tabs button, .popup-content {
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.5px; /* Optional: Tighter letter spacing */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #222429;
+        }
+
+        header {
+    background-color: #cf2e2e;
+    color: white;
+    padding: 1%;
+    display: flex;
+    align-items: center; /* Aligner le contenu au centre verticalement */
+    justify-content: space-between; /* Espacement égal entre le logo et le titre */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header img {
+    max-height: 15vh; /* Hauteur du logo */
+    margin-left: 0; /* Aucun espacement gauche, à ajuster si nécessaire */
+}
+
+.header-content {
+    text-align: left;
+    margin-left: 10px; /* Ajouter un petit espace entre le logo et le titre */
+    flex: 1; /* Le titre prend le reste de l'espace disponible */
+}
+
+.header-content h1 {
+            margin: 0; /* Enlever toute marge par défaut pour éviter le chevauchement */
+            font-size: 40px; /* Agrandir la taille du titre */
+        }
+
+.header-content p {
+            font-size: 20px; /* Agrandir la taille du texte */
+        }
+
+
+        .popup-button {
+            background-color: white;
+            color: #cf2e2e;
+            border: 2px solid #cf2e2e;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .popup-button:hover {
+            background-color: #cf2e2e;
+            color: white;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .tabs {
+            width: 150px;
+            background-color: #222429;
+            border-right: 2px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        .tabs button {
+            background: none;
+            border: none;
+            padding: 15px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+            border-bottom: 1px solid white;
+            transition: background-color 0.3s ease;
+        }
+
+        .tabs button:hover {
+            background-color: white;
+        }
+
+        .tabs button.active {
+            background-color: #cf2e2e;
+            font-weight: bold;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .content .map {
+            display: none;
+            width: 100%;
+            height: calc(100vh - 100px);
+        }
+
+        .content .map.active {
+            display: block;
+        }
+
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            position: relative;
+            max-width: 100%;
+            max-height: 100%;
+            overflow: auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .popup-content .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #cf2e2e;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .popup-content .close-button:hover {
+            background: darkred;
+        }
+
+        .popup-content .flourish-embed {
+            width: 500px;
+            height: 500px;
+            max-width: 100%;
+        }
+
+        .flourish-embed {
+            width: 90vw;
+            height: 90vh;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="https://nologofestival.fr/">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSO6ikvJ7c0hR8WIW6zizImevaSryesSeLjlg&s" alt="Site Logo">
+        </a>
+        <div class="header-content">
+            <h1>Fréquentation du NoLogo Festival</h1>
+            <p>Le festival 100% libre et 100% indépendant<br>
+                n’appartenant qu’à ses festivaliers.</p>
+        </div>
+        <button class="popup-button">Les moyens de transport des festivaliers</button>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-button active" data-map="map1">Fréquentation du festival</button>
+            <button class="tab-button" data-map="map2">Évolution de la fréquentation</button>
+        </div>
+
+        <div class="content">
+            <div id="map1" class="map active">
+                <div class="flourish-embed flourish-map" data-src="visualisation/20279925"></div>
+            </div>
+            <div id="map2" class="map">
+                <div class="flourish-embed flourish-map" data-src="visualisation/20316248">
+                    <script src="https://public.flourish.studio/resources/embed.js"></script>
+                    <noscript><img src="https://public.flourish.studio/visualisation/20316248/thumbnail" width="100%" alt="map visualization" /></noscript>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <button class="close-button">&times;</button>
+            <div class="flourish-embed flourish-pictogram" data-src="visualisation/20299139"></div>
+        </div>
+    </div>
+
+    <script>
+        // Handle tab switching
+        const buttons = document.querySelectorAll('.tab-button');
+        const maps = document.querySelectorAll('.map');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                buttons.forEach(btn => btn.classList.remove('active'));
+                maps.forEach(map => map.classList.remove('active'));
+
+                button.classList.add('active');
+                const mapId = button.getAttribute('data-map');
+                document.getElementById(mapId).classList.add('active');
+            });
+        });
+
+        // Popup functionality
+        const popup = document.getElementById('popup');
+        const popupButton = document.querySelector('.popup-button');
+        const closeButton = document.querySelector('.popup-content .close-button');
+
+        popupButton.addEventListener('click', () => {
+            popup.style.display = 'flex';
+        });
+
+        closeButton.addEventListener('click', () => {
+            popup.style.display = 'none';
+        });
+
+        popup.addEventListener('click', (e) => {
+            if (e.target === popup) {
+                popup.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
+
